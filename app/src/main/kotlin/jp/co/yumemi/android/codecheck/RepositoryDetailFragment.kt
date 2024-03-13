@@ -31,14 +31,14 @@ class RepositoryDetailFragment : Fragment(R.layout.fragment_repository_detail) {
 
         _binding = FragmentRepositoryDetailBinding.bind(view)
 
-        val item = args.RepositoryItem
+        val repositoryItem = args.repositoryItem
 
-        binding.ownerIconView.load(item.ownerIconUrl)
-        binding.nameView.text = item.name
-        binding.languageView.text = item.language
-        binding.starsView.text = "${item.stargazersCount} stars"
-        binding.watchersView.text = "${item.watchersCount} watchers"
-        binding.forksView.text = "${item.forksCount} forks"
-        binding.openIssuesView.text = "${item.openIssuesCount} open issues"
+        binding.ownerIconView.load(repositoryItem.ownerIconUrl)
+        binding.nameView.text = repositoryItem.name
+        binding.languageView.text = repositoryItem.language
+        binding.starsView.text = "${repositoryItem.stargazersCount} stars"
+        binding.watchersView.text = "${repositoryItem.watchersCount} watchers"
+        binding.forksView.text = "${repositoryItem.forksCount} forks"
+        binding.openIssuesView.text = "${repositoryItem.openIssuesCount} open issues"
     }
 }
