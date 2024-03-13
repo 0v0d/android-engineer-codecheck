@@ -16,8 +16,6 @@ import jp.co.yumemi.android.codecheck.databinding.FragmentRepositoryDetailBindin
 class RepositoryDetailFragment : Fragment(R.layout.fragment_repository_detail) {
 
     private val args: RepositoryDetailFragmentArgs by navArgs()
-    private var _binding: FragmentRepositoryDetailBinding? = null
-    private val binding get() = _binding!!
 
     /**
      * ビュー生成時の処理
@@ -28,9 +26,7 @@ class RepositoryDetailFragment : Fragment(R.layout.fragment_repository_detail) {
         super.onViewCreated(view, savedInstanceState)
 
         Log.d("検索した日時", lastSearchDate.toString())
-
-        _binding = FragmentRepositoryDetailBinding.bind(view)
-
+        val binding = FragmentRepositoryDetailBinding.bind(view)
         val repositoryItem = args.repositoryItem
 
         binding.ownerIconView.load(repositoryItem.ownerIconUrl)
@@ -41,11 +37,5 @@ class RepositoryDetailFragment : Fragment(R.layout.fragment_repository_detail) {
         binding.forksView.text = getString(R.string.forks, repositoryItem.forksCount)
         binding.openIssuesView.text =
             getString(R.string.open_issues, repositoryItem.openIssuesCount)
-    }
-
-    /** ビュー破棄時の処理 */
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
