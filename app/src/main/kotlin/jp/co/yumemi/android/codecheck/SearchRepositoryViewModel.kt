@@ -3,8 +3,6 @@
  */
 package jp.co.yumemi.android.codecheck
 
-import android.content.Context
-import android.os.Parcelable
 import androidx.lifecycle.ViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.call.receive
@@ -17,17 +15,11 @@ import jp.co.yumemi.android.codecheck.MainActivity.Companion.lastSearchDate
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 import java.util.Date
 
-/**
- * リポジトリーの検索結果を返すためのViewModel
- * @param context コンテキスト
- */
-class SearchRepositoryViewModel(
-    val context: Context
-) : ViewModel() {
+/** リポジトリーの検索結果を返すためのViewModel */
+class SearchRepositoryViewModel : ViewModel() {
 
     /**
      * リポジトリーの検索結果を返す
@@ -64,7 +56,7 @@ class SearchRepositoryViewModel(
                     RepositoryItem(
                         name = name,
                         ownerIconUrl = ownerIconUrl,
-                        language = context.getString(R.string.written_language, language),
+                        language = language,
                         stargazersCount = stargazersCount,
                         watchersCount = watchersCount,
                         forksCount = forksCount,
@@ -79,24 +71,3 @@ class SearchRepositoryViewModel(
         }.await()
     }
 }
-
-/**
- * リポジトリーアイテム
- * @param name リポジトリー名
- * @param ownerIconUrl オーナーアイコンURL
- * @param language 言語
- * @param stargazersCount スターガザー数
- * @param watchersCount ウォッチャー数
- * @param forksCount フォーク数
- * @param openIssuesCount オープンイシュー数
- */
-@Parcelize
-data class RepositoryItem(
-    val name: String,
-    val ownerIconUrl: String,
-    val language: String,
-    val stargazersCount: Long,
-    val watchersCount: Long,
-    val forksCount: Long,
-    val openIssuesCount: Long,
-) : Parcelable
