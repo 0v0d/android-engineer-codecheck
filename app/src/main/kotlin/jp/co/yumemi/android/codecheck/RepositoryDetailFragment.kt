@@ -17,24 +17,24 @@ class RepositoryDetailFragment : Fragment(R.layout.fragment_repository_detail) {
 
     private val args: RepositoryDetailFragmentArgs by navArgs()
 
-    private var binding: FragmentRepositoryDetailBinding? = null
-    private val _binding get() = binding!!
+    private var _binding: FragmentRepositoryDetailBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         Log.d("検索した日時", lastSearchDate.toString())
 
-        binding = FragmentRepositoryDetailBinding.bind(view)
+        _binding = FragmentRepositoryDetailBinding.bind(view)
 
-        var item = args.item
+        val item = args.RepositoryItem
 
-        _binding.ownerIconView.load(item.ownerIconUrl);
-        _binding.nameView.text = item.name;
-        _binding.languageView.text = item.language;
-        _binding.starsView.text = "${item.stargazersCount} stars";
-        _binding.watchersView.text = "${item.watchersCount} watchers";
-        _binding.forksView.text = "${item.forksCount} forks";
-        _binding.openIssuesView.text = "${item.openIssuesCount} open issues";
+        binding.ownerIconView.load(item.ownerIconUrl)
+        binding.nameView.text = item.name
+        binding.languageView.text = item.language
+        binding.starsView.text = "${item.stargazersCount} stars"
+        binding.watchersView.text = "${item.watchersCount} watchers"
+        binding.forksView.text = "${item.forksCount} forks"
+        binding.openIssuesView.text = "${item.openIssuesCount} open issues"
     }
 }

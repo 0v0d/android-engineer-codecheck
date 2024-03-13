@@ -29,7 +29,7 @@ class SearchRepositoryViewModel(
 ) : ViewModel() {
 
     // 検索結果
-    fun searchResults(inputText: String): List<item> = runBlocking {
+    fun searchRepositories(inputText: String): List<RepositoryItem> = runBlocking {
         val client = HttpClient(Android)
 
         return@runBlocking GlobalScope.async {
@@ -42,7 +42,7 @@ class SearchRepositoryViewModel(
 
             val jsonItems = jsonBody.optJSONArray("items")!!
 
-            val items = mutableListOf<item>()
+            val repositoryItems = mutableListOf<RepositoryItem>()
 
             /**
              * アイテムの個数分ループする
@@ -57,8 +57,8 @@ class SearchRepositoryViewModel(
                 val forksCount = jsonItem.optLong("forks_conut")
                 val openIssuesCount = jsonItem.optLong("open_issues_count")
 
-                items.add(
-                    item(
+                repositoryItems.add(
+                    RepositoryItem(
                         name = name,
                         ownerIconUrl = ownerIconUrl,
                         language = context.getString(R.string.written_language, language),
@@ -72,13 +72,13 @@ class SearchRepositoryViewModel(
 
             lastSearchDate = Date()
 
-            return@async items.toList()
+            return@async repositoryItems.toList()
         }.await()
     }
 }
 
 @Parcelize
-data class item(
+data class RepositoryItem(
     val name: String,
     val ownerIconUrl: String,
     val language: String,
