@@ -23,6 +23,8 @@
         <argument
             android:name="repositoryItem"
             app:argType="jp.co.yumemi.android.codecheck.RepositoryItem" />
+		<argument
+			android:name="lastSearchDate"
+			app:argType="string" />
     </fragment>
-
 </navigation>
