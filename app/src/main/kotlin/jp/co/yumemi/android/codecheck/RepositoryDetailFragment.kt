@@ -35,10 +35,17 @@ class RepositoryDetailFragment : Fragment(R.layout.fragment_repository_detail) {
 
         binding.ownerIconView.load(repositoryItem.ownerIconUrl)
         binding.nameView.text = repositoryItem.name
-        binding.languageView.text = repositoryItem.language
-        binding.starsView.text = "${repositoryItem.stargazersCount} stars"
-        binding.watchersView.text = "${repositoryItem.watchersCount} watchers"
-        binding.forksView.text = "${repositoryItem.forksCount} forks"
-        binding.openIssuesView.text = "${repositoryItem.openIssuesCount} open issues"
+        binding.languageView.text = getString(R.string.written_language, repositoryItem.language)
+        binding.starsView.text = getString(R.string.stars, repositoryItem.stargazersCount)
+        binding.watchersView.text = getString(R.string.watchers, repositoryItem.watchersCount)
+        binding.forksView.text = getString(R.string.forks, repositoryItem.forksCount)
+        binding.openIssuesView.text =
+            getString(R.string.open_issues, repositoryItem.openIssuesCount)
+    }
+
+    /** ビュー破棄時の処理 */
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
