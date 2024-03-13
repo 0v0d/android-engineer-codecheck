@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -17,9 +18,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.yumemi.android.codecheck.databinding.FragmentSearchRepositoryBinding
+import java.util.Date
 
 /** リポジトリー検索画面 */
 class SearchRepositoryFragment : Fragment(R.layout.fragment_search_repository) {
+    private val viewModel: SearchRepositoryViewModel by viewModels()
 
     /**
      * ビュー生成時の処理
@@ -31,7 +34,6 @@ class SearchRepositoryFragment : Fragment(R.layout.fragment_search_repository) {
 
         val binding = FragmentSearchRepositoryBinding.bind(view)
 
-        val viewModel = SearchRepositoryViewModel()
 
         val layoutManager = LinearLayoutManager(requireContext())
         val dividerItemDecoration =
@@ -67,8 +69,9 @@ class SearchRepositoryFragment : Fragment(R.layout.fragment_search_repository) {
      * @param repositoryItem リポジトリーアイテム
      */
     fun navigateToRepositoryFragment(repositoryItem: RepositoryItem) {
+        val date = viewModel.lastSearchDate.value ?: Date()
         val action = SearchRepositoryFragmentDirections
-            .actionRepositoriesFragmentToRepositoryFragment(repositoryItem = repositoryItem)
+            .actionRepositoriesFragmentToRepositoryFragment(repositoryItem, date.toString())
         findNavController().navigate(action)
     }
 }
