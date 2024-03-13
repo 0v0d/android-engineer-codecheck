@@ -12,14 +12,18 @@ import coil.load
 import jp.co.yumemi.android.codecheck.MainActivity.Companion.lastSearchDate
 import jp.co.yumemi.android.codecheck.databinding.FragmentRepositoryDetailBinding
 
-
+/** リポジトリ詳細画面 */
 class RepositoryDetailFragment : Fragment(R.layout.fragment_repository_detail) {
 
     private val args: RepositoryDetailFragmentArgs by navArgs()
-
     private var _binding: FragmentRepositoryDetailBinding? = null
     private val binding get() = _binding!!
 
+    /**
+     * ビュー生成時の処理
+     * @param view ビュー
+     * @param savedInstanceState 保存されたインスタンスの状態
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

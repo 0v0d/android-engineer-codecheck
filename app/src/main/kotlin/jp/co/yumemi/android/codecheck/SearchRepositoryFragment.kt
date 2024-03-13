@@ -18,8 +18,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.yumemi.android.codecheck.databinding.FragmentSearchRepositoryBinding
 
+/** リポジトリー検索画面 */
 class SearchRepositoryFragment : Fragment(R.layout.fragment_search_repository) {
 
+    /**
+     * ビュー生成時の処理
+     * @param view ビュー
+     * @param savedInstanceState 保存されたインスタンスの状態
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -56,6 +62,10 @@ class SearchRepositoryFragment : Fragment(R.layout.fragment_search_repository) {
         }
     }
 
+    /**
+     * リポジトリー詳細画面へ遷移する
+     * @param repositoryItem リポジトリーアイテム
+     */
     fun navigateToRepositoryFragment(repositoryItem: RepositoryItem) {
         val action = SearchRepositoryFragmentDirections
             .actionRepositoriesFragmentToRepositoryFragment(RepositoryItem = repositoryItem)
@@ -63,17 +73,28 @@ class SearchRepositoryFragment : Fragment(R.layout.fragment_search_repository) {
     }
 }
 
+/** リポジトリーアイテムの差分検出 */
 val diff_util = object : DiffUtil.ItemCallback<RepositoryItem>() {
-    override fun areItemsTheSame(oldRepositoryItem: RepositoryItem, newRepositoryItem: RepositoryItem): Boolean {
+    override fun areItemsTheSame(
+        oldRepositoryItem: RepositoryItem,
+        newRepositoryItem: RepositoryItem
+    ): Boolean {
         return oldRepositoryItem.name == newRepositoryItem.name
     }
 
-    override fun areContentsTheSame(oldRepositoryItem: RepositoryItem, newRepositoryItem: RepositoryItem): Boolean {
+    override fun areContentsTheSame(
+        oldRepositoryItem: RepositoryItem,
+        newRepositoryItem: RepositoryItem
+    ): Boolean {
         return oldRepositoryItem == newRepositoryItem
     }
 
 }
 
+/**
+ * カスタムアダプター
+ * @param itemClickListener アイテムクリックリスナー
+ */
 class CustomAdapter(
     private val itemClickListener: OnItemClickListener,
 ) : ListAdapter<RepositoryItem, CustomAdapter.ViewHolder>(diff_util) {
@@ -84,12 +105,23 @@ class CustomAdapter(
         fun itemClick(repositoryItem: RepositoryItem)
     }
 
+    /**
+     * ビューホルダー生成時の処理
+     * @param parent ビュー
+     * @param viewType ビュータイプ
+     * @return ビューホルダー
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.layout_item, parent, false)
         return ViewHolder(view)
     }
 
+    /**
+     * ビューホルダーのバインド時の処理
+     * @param holder ビューホルダー
+     * @param position 位置
+     */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         (holder.itemView.findViewById<View>(R.id.repositoryNameView) as TextView).text =

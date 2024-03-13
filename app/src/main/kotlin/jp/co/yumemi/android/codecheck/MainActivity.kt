@@ -9,6 +9,7 @@ import java.util.Date
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     companion object {
+        /** 前回検索日付 */
         lateinit var lastSearchDate: Date
     }
 }

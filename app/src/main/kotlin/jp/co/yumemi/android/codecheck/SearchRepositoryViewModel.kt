@@ -22,13 +22,18 @@ import org.json.JSONObject
 import java.util.Date
 
 /**
- * TwoFragment で使う
+ * リポジトリーの検索結果を返すためのViewModel
+ * @param context コンテキスト
  */
 class SearchRepositoryViewModel(
     val context: Context
 ) : ViewModel() {
 
-    // 検索結果
+    /**
+     * リポジトリーの検索結果を返す
+     * @param inputText 検索文字列
+     * @return リポジトリーアイテムのリスト
+     */
     fun searchRepositories(inputText: String): List<RepositoryItem> = runBlocking {
         val client = HttpClient(Android)
 
@@ -44,9 +49,7 @@ class SearchRepositoryViewModel(
 
             val repositoryItems = mutableListOf<RepositoryItem>()
 
-            /**
-             * アイテムの個数分ループする
-             */
+            // アイテムの個数分ループする
             for (i in 0 until jsonItems.length()) {
                 val jsonItem = jsonItems.optJSONObject(i)!!
                 val name = jsonItem.optString("full_name")
@@ -77,6 +80,16 @@ class SearchRepositoryViewModel(
     }
 }
 
+/**
+ * リポジトリーアイテム
+ * @param name リポジトリー名
+ * @param ownerIconUrl オーナーアイコンURL
+ * @param language 言語
+ * @param stargazersCount スターガザー数
+ * @param watchersCount ウォッチャー数
+ * @param forksCount フォーク数
+ * @param openIssuesCount オープンイシュー数
+ */
 @Parcelize
 data class RepositoryItem(
     val name: String,
