@@ -34,7 +34,6 @@ class SearchRepositoryFragment : Fragment(R.layout.fragment_search_repository) {
 
         val binding = FragmentSearchRepositoryBinding.bind(view)
 
-
         val layoutManager = LinearLayoutManager(requireContext())
         val dividerItemDecoration =
             DividerItemDecoration(requireContext(), layoutManager.orientation)
@@ -44,23 +43,24 @@ class SearchRepositoryFragment : Fragment(R.layout.fragment_search_repository) {
             }
         })
 
-        binding.searchInputText
-            .setOnEditorActionListener { editText, action, _ ->
-                if (action == EditorInfo.IME_ACTION_SEARCH) {
-                    editText.text.toString().let {
-                        viewModel.searchRepositories(it).apply {
-                            adapter.submitList(this)
-                        }
-                    }
-                    return@setOnEditorActionListener true
+        binding.searchInputText.setOnEditorActionListener { editText, action, _ ->
+            if (action == EditorInfo.IME_ACTION_SEARCH) {
+                editText.text.toString().let {
+                    viewModel.searchRepositories(it)
                 }
-                return@setOnEditorActionListener false
+                return@setOnEditorActionListener true
             }
+            return@setOnEditorActionListener false
+        }
 
         binding.recyclerView.also {
             it.layoutManager = layoutManager
             it.addItemDecoration(dividerItemDecoration)
             it.adapter = adapter
+        }
+
+        viewModel.repositoryItems.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
     }
 
