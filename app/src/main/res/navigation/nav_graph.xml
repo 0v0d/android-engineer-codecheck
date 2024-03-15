@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/SearchRepositoryFragment"
-        android:name="jp.co.yumemi.android.codecheck.SearchRepositoryFragment"
+        android:name="jp.co.yumemi.android.codecheck.view.SearchRepositoryFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_search_repository">
         <action
@@ -17,12 +17,12 @@
 
     <fragment
         android:id="@+id/RepositoryDetailFragment"
-        android:name="jp.co.yumemi.android.codecheck.RepositoryDetailFragment"
+        android:name="jp.co.yumemi.android.codecheck.view.RepositoryDetailFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_repository_detail">
         <argument
             android:name="repositoryItem"
-            app:argType="jp.co.yumemi.android.codecheck.RepositoryItem" />
+            app:argType="jp.co.yumemi.android.codecheck.model.RepositoryItem" />
 		<argument
 			android:name="lastSearchDate"
 			app:argType="string" />
