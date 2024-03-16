@@ -65,4 +65,10 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.13'
     //画像表示
     implementation 'com.squareup.picasso:picasso:2.71828'
+    //Dagger-Hilt
+    implementation "com.google.dagger:hilt-android:2.51"
+    kapt "com.google.dagger:hilt-compiler:2.51"
+}
+kapt {
+    correctErrorTypes true
 }
