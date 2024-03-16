@@ -1,25 +1,45 @@
 package jp.co.yumemi.android.codecheck.model
 
 import android.os.Parcelable
+import com.squareup.moshi.Json
 import kotlinx.parcelize.Parcelize
 
 /**
- * リポジトリーアイテム
- * @param name リポジトリー名
- * @param ownerIconUrl オーナーアイコンURL
+ * リポジトリ情報を保持するデータクラス
+ * @param id リポジトリID
+ * @param name リポジトリ名
+ * @param fullName リポジトリのフルネーム
+ * @param owner オーナー情報
+ * @param htmlUrl GitHubのURL
+ * @param description 説明
  * @param language 言語
- * @param stargazersCount スターガザー数
- * @param watchersCount ウォッチャー数
+ * @param stargazersCount スター数
+ * @param watchersCount Watch数
  * @param forksCount フォーク数
  * @param openIssuesCount オープンイシュー数
  */
 @Parcelize
 data class RepositoryItem(
+    @Json(name = "id")
+    val id: Long,
+    @Json(name = "name")
     val name: String,
-    val ownerIconUrl: String,
-    val language: String,
-    val stargazersCount: Long,
-    val watchersCount: Long,
-    val forksCount: Long,
-    val openIssuesCount: Long,
+    @Json(name = "full_name")
+    val fullName: String,
+    @Json(name = "owner")
+    val owner: OwnerItem,
+    @Json(name = "html_url")
+    val htmlUrl: String,
+    @Json(name = "description")
+    val description: String?,
+    @Json(name = "language")
+    val language: String?,
+    @Json(name = "stargazers_count")
+    val stargazersCount: Int,
+    @Json(name = "watchers_count")
+    val watchersCount: Int,
+    @Json(name = "forks_count")
+    val forksCount: Int,
+    @Json(name = "open_issues_count")
+    val openIssuesCount: Int
 ) : Parcelable
