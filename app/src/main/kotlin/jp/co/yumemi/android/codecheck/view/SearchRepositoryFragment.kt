@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.codecheck.R
 import jp.co.yumemi.android.codecheck.viewmodel.SearchRepositoryViewModel
 import jp.co.yumemi.android.codecheck.adapter.RepositoryListAdapter
@@ -19,6 +20,7 @@ import jp.co.yumemi.android.codecheck.model.RepositoryItem
 import java.util.Date
 
 /** リポジトリー検索画面 */
+@AndroidEntryPoint
 class SearchRepositoryFragment : Fragment(R.layout.fragment_search_repository) {
     private val viewModel: SearchRepositoryViewModel by viewModels()
 
@@ -35,23 +37,22 @@ class SearchRepositoryFragment : Fragment(R.layout.fragment_search_repository) {
         val layoutManager = LinearLayoutManager(requireContext())
         val dividerItemDecoration =
             DividerItemDecoration(requireContext(), layoutManager.orientation)
-        val adapter = RepositoryListAdapter(object : RepositoryListAdapter.OnItemClickListener {
-            override fun itemClick(repositoryItem: RepositoryItem) {
-                navigateToRepositoryFragment(repositoryItem)
-            }
-        })
+        val repositoryItemClickListener = { it: RepositoryItem ->
+            navigateToRepositoryFragment(it)
+        }
+        val adapter = RepositoryListAdapter(repositoryItemClickListener)
 
         binding.searchInputText.setOnEditorActionListener { editText, action, _ ->
             if (action == EditorInfo.IME_ACTION_SEARCH) {
-                editText.text.toString().let {
-                    viewModel.searchRepositories(it)
-                }
+                val text = editText.text.toString()
+                viewModel.searchRepositories(text)
+
                 return@setOnEditorActionListener true
             }
             return@setOnEditorActionListener false
         }
 
-        binding.recyclerView.also {
+        binding.repositoryRecyclerView.also {
             it.layoutManager = layoutManager
             it.addItemDecoration(dividerItemDecoration)
             it.adapter = adapter
@@ -66,7 +67,7 @@ class SearchRepositoryFragment : Fragment(R.layout.fragment_search_repository) {
      * リポジトリー詳細画面へ遷移する
      * @param repositoryItem リポジトリーアイテム
      */
-    fun navigateToRepositoryFragment(repositoryItem: RepositoryItem) {
+    private fun navigateToRepositoryFragment(repositoryItem: RepositoryItem) {
         val date = viewModel.lastSearchDate.value ?: Date()
         val action =
             SearchRepositoryFragmentDirections.actionRepositoriesFragmentToRepositoryFragment(

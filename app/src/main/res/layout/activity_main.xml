@@ -19,5 +19,4 @@
 		app:navGraph="@navigation/nav_graph"
 		tools:layout="@layout/fragment_search_repository" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

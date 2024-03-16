@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import jp.co.yumemi.android.codecheck.databinding.LayoutItemBinding
+import jp.co.yumemi.android.codecheck.databinding.LayoutRepositoryListItemBinding
 import jp.co.yumemi.android.codecheck.model.RepositoryItem
 
 /**
  * リポジトリーリストアダプター
- * @param itemClickListener アイテムクリックリスナー
+ * @param onRepositoryItemClick リポジトリーアイテムクリック時の処理
  */
 class RepositoryListAdapter(
-    private val itemClickListener: OnItemClickListener
+    private val onRepositoryItemClick: (RepositoryItem) -> Unit
 ) : ListAdapter<RepositoryItem, RepositoryListViewHolder>(repositoryItemDiffCallback) {
 
     /**
@@ -23,7 +23,7 @@ class RepositoryListAdapter(
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoryListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = LayoutItemBinding.inflate(inflater, parent, false)
+        val binding = LayoutRepositoryListItemBinding.inflate(inflater, parent, false)
         return RepositoryListViewHolder(binding)
     }
 
@@ -33,13 +33,7 @@ class RepositoryListAdapter(
      * @param position ポジション
      */
     override fun onBindViewHolder(holder: RepositoryListViewHolder, position: Int) {
-        holder.bind(getItem(position), itemClickListener)
-    }
-
-    /** アイテムクリックリスナー */
-    interface OnItemClickListener {
-        /** アイテムクリック時の処理 */
-        fun itemClick(repositoryItem: RepositoryItem)
+        holder.bind(getItem(position), onRepositoryItemClick)
     }
 }
 
