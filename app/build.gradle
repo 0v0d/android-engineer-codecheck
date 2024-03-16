@@ -68,6 +68,12 @@ dependencies {
     //Dagger-Hilt
     implementation "com.google.dagger:hilt-android:2.51"
     kapt "com.google.dagger:hilt-compiler:2.51"
+    // APIとの通信用のライブラリ
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    // Jsonパーサーライブラリ
+    implementation 'com.squareup.moshi:moshi-kotlin:1.15.1'
+    // MoshiのConverterを使うためのライブラリ
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
 }
 kapt {
     correctErrorTypes true
