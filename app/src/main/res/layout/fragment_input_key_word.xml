@@ -7,13 +7,10 @@
 	tools:context=".MainActivity">
 
 	<com.google.android.material.card.MaterialCardView
-		android:id="@+id/searchBar"
+		android:id="@+id/materialCardView"
 		android:layout_width="0dp"
-		android:layout_height="?attr/actionBarSize"
-		android:layout_margin="12dp"
-		app:cardCornerRadius="12dp"
-		app:cardElevation="8dp"
-		app:layout_constraintBottom_toTopOf="@id/repositoryRecyclerView"
+		android:layout_height="wrap_content"
+		android:layout_margin="10dp"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent">
@@ -24,6 +21,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:importantForAutofill="no"
+			android:theme="@style/textCursorStyle"
 			app:endIconMode="clear_text"
 			app:endIconTint="@android:color/darker_gray"
 			app:hintTextColor="@android:color/darker_gray"
@@ -45,18 +43,5 @@
 				android:textSize="12sp" />
 
 		</com.google.android.material.textfield.TextInputLayout>
-
 	</com.google.android.material.card.MaterialCardView>
-
-	<androidx.recyclerview.widget.RecyclerView
-		android:id="@+id/repositoryRecyclerView"
-		android:layout_width="0dp"
-		android:layout_height="0dp"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/searchBar"
-		tools:listitem="@layout/layout_repository_list_item"
-		tools:itemCount="20"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
