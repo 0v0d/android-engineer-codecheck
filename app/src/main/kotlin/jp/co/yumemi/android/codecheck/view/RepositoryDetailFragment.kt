@@ -40,7 +40,9 @@ class RepositoryDetailFragment : Fragment(R.layout.fragment_repository_detail) {
     /** urlの変更を監視 */
     private fun observeUrl() {
         viewModel.url.observe(viewLifecycleOwner) {
-            openWebBrowser(it)
+            if (it != null) {
+                openWebBrowser(it)
+            }
         }
     }
 
