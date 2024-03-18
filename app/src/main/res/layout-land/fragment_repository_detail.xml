@@ -16,9 +16,9 @@
 
 		<com.google.android.material.imageview.ShapeableImageView
 			android:id="@+id/ownerIconImageView"
-			android:layout_width="50dp"
-			android:layout_height="50dp"
-			android:layout_marginStart="10dp"
+			android:layout_width="70dp"
+			android:layout_height="70dp"
+			android:layout_marginStart="20dp"
 			android:layout_marginTop="20dp"
 			app:imageUrl="@{repositoryItem.owner.avatarUrl}"
 			app:layout_constraintStart_toStartOf="parent"
@@ -29,16 +29,16 @@
 
 		<TextView
 			android:id="@+id/ownerNameTextView"
-			android:layout_width="0dp"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="10dp"
 			android:layout_marginTop="5dp"
-			android:layout_marginEnd="10dp"
+
 			android:text='@{repositoryItem.owner.login}'
 			android:textAllCaps="false"
 			android:textColor="@color/grey"
 			android:textSize="18sp"
-			app:layout_constraintEnd_toEndOf="parent"
+
 			app:layout_constraintStart_toEndOf="@+id/ownerIconImageView"
 			app:layout_constraintTop_toTopOf="@+id/ownerIconImageView"
 			tools:text="JetBrains" />
@@ -62,7 +62,8 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="20dp"
 			android:text='@{repositoryItem.description}'
-			app:layout_constraintEnd_toEndOf="@+id/ownerNameTextView"
+			android:layout_marginEnd="20dp"
+			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="@+id/repositoryNameTextView"
 			app:layout_constraintTop_toBottomOf="@+id/repositoryNameTextView"
 			tools:text="The Kotlin Programming Language." />
@@ -88,7 +89,8 @@
 			android:textColorLink="@color/blue"
 			android:textSize="15sp"
 			android:textStyle="bold"
-			app:layout_constraintEnd_toEndOf="@+id/ownerNameTextView"
+			app:layout_constraintBottom_toBottomOf="@+id/repositoryLinkImageView"
+			app:layout_constraintEnd_toEndOf="@+id/repositoryDescriptionTextView"
 			app:layout_constraintStart_toEndOf="@+id/repositoryLinkImageView"
 			app:layout_constraintTop_toTopOf="@+id/repositoryLinkImageView"
 			tools:text="https://github.com/JetBrains" />
@@ -97,11 +99,11 @@
 			android:id="@+id/starCountImageView"
 			android:layout_width="24dp"
 			android:layout_height="24dp"
-			android:layout_marginTop="15dp"
 			android:contentDescription="@null"
 			android:src="@drawable/ic_star"
-			app:layout_constraintStart_toStartOf="@+id/repositoryLinkImageView"
-			app:layout_constraintTop_toBottomOf="@+id/repositoryLinkImageView" />
+			android:layout_marginStart="50dp"
+			app:layout_constraintStart_toEndOf="@+id/ownerNameTextView"
+			app:layout_constraintTop_toTopOf="@+id/ownerNameTextView" />
 
 		<TextView
 			android:id="@+id/starCountTextView"
