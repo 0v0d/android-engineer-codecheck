@@ -3,18 +3,23 @@
  */
 package jp.co.yumemi.android.codecheck.view
 
+import android.content.ComponentName
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import jp.co.yumemi.android.codecheck.R
 import jp.co.yumemi.android.codecheck.databinding.FragmentRepositoryDetailBinding
+import jp.co.yumemi.android.codecheck.viewmodel.RepositoryDetailViewModel
 
 /** リポジトリ詳細画面 */
 class RepositoryDetailFragment : Fragment(R.layout.fragment_repository_detail) {
-
     private val args: RepositoryDetailFragmentArgs by navArgs()
+    private val viewModel: RepositoryDetailViewModel by viewModels()
 
     /**
      * ビュー生成時の処理
@@ -26,6 +31,31 @@ class RepositoryDetailFragment : Fragment(R.layout.fragment_repository_detail) {
 
         Log.d("検索した日時", args.lastSearchDate)
         val binding = FragmentRepositoryDetailBinding.bind(view)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.repositoryItem = args.repositoryItem
+        observeUrl()
+    }
+
+    /** urlの変更を監視 */
+    private fun observeUrl() {
+        viewModel.url.observe(viewLifecycleOwner) {
+            openWebBrowser(it)
+        }
+    }
+
+    /**
+     * WebViewでURLを開く
+     * @param url 開くURL
+     */
+    private fun openWebBrowser(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, url.toUri())
+        intent.setComponent(
+            ComponentName(
+                "com.android.chrome",
+                "com.google.android.apps.chrome.Main"
+            )
+        )
+        startActivity(intent)
     }
 }
