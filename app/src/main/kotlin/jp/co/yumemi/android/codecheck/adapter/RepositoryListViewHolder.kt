@@ -8,8 +8,9 @@ import jp.co.yumemi.android.codecheck.model.RepositoryItem
  * リポジトリリストビューホルダー
  * @param binding レイアウトバインディング
  */
-class RepositoryListViewHolder(private val binding: LayoutRepositoryListItemBinding) :
-    RecyclerView.ViewHolder(binding.root) {
+class RepositoryListViewHolder (
+    private val binding: LayoutRepositoryListItemBinding
+) : RecyclerView.ViewHolder(binding.root) {
 
     /**
      * データをバインドする
