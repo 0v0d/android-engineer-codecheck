@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<style name="roundedCornersImageView" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">24%</item>
+	</style>
+
+	<style name="textCursorStyle">
+		<item name="colorControlActivated">@color/blue</item>
+		<item name="android:textCursorDrawable">@drawable/edit_text_cursor</item>
+	</style>
+
+	<style name="TextInputLayoutNoBorder" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+		<item name="errorIconDrawable">@null</item>
+		<item name="errorIconTint">@null</item>
+		<item name="hintEnabled">false</item>
+		<item name="boxBackgroundMode">none</item>
+	</style>
+
+	<style name="outlinedButtonStyle" parent="Widget.Material3.Button.OutlinedButton">
+		<item name="android:textColor">?attr/colorControlNormal</item>
+		<item name="strokeWidth">1dp</item>
+		<item name="strokeColor">#585858</item>
+		<item name="android:textSize">15sp</item>
+	</style>
+</resources>

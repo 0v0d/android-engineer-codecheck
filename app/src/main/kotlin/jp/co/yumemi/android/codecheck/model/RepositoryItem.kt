@@ -35,11 +35,11 @@ data class RepositoryItem(
     @Json(name = "language")
     val language: String?,
     @Json(name = "stargazers_count")
-    val stargazersCount: Int,
+    val stargazersCount: String,
     @Json(name = "watchers_count")
-    val watchersCount: Int,
+    val watchersCount: String,
     @Json(name = "forks_count")
-    val forksCount: Int,
+    val forksCount: String,
     @Json(name = "open_issues_count")
-    val openIssuesCount: Int
+    val openIssuesCount: String
 ) : Parcelable

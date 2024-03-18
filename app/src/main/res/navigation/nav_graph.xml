@@ -1,30 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/SearchRepositoryFragment">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/nav_graph"
+	app:startDestination="@id/InputKeyWordFragment">
 
-    <fragment
-        android:id="@+id/SearchRepositoryFragment"
-        android:name="jp.co.yumemi.android.codecheck.view.SearchRepositoryFragment"
-        android:label="@string/app_name"
-        tools:layout="@layout/fragment_search_repository">
-        <action
-            android:id="@+id/action_repositoriesFragment_to_repositoryFragment"
-            app:destination="@id/RepositoryDetailFragment" />
-    </fragment>
+	<fragment
+		android:id="@+id/InputKeyWordFragment"
+		android:name="jp.co.yumemi.android.codecheck.view.InputKeyWordFragment"
+		android:label="@string/home"
+		tools:layout="@layout/fragment_input_key_word">
+		<action
+			android:id="@+id/action_to_repositoryListFragment"
+			app:destination="@id/RepositoryListFragment"
+			app:enterAnim="@anim/nav_slide_enter_anim"
+			app:exitAnim="@anim/nav_slide_exit_anim"
+			app:popEnterAnim="@anim/nav_pop_slide_enter_anim"
+			app:popExitAnim="@anim/nav_pop_slide_exit_anim" />
+	</fragment>
 
-    <fragment
-        android:id="@+id/RepositoryDetailFragment"
-        android:name="jp.co.yumemi.android.codecheck.view.RepositoryDetailFragment"
-        android:label="@string/app_name"
-        tools:layout="@layout/fragment_repository_detail">
-        <argument
-            android:name="repositoryItem"
-            app:argType="jp.co.yumemi.android.codecheck.model.RepositoryItem" />
+	<fragment
+		android:id="@+id/RepositoryListFragment"
+		android:name="jp.co.yumemi.android.codecheck.view.RepositoryListFragment"
+		android:label="@string/repository"
+		tools:layout="@layout/fragment_repository_list">
+		<argument
+			android:name="inputText"
+			app:argType="string" />
+		<action
+			android:id="@+id/action_to_repositoryDetailFragment"
+			app:destination="@id/RepositoryDetailFragment"
+			app:enterAnim="@anim/nav_slide_enter_anim"
+			app:exitAnim="@anim/nav_slide_exit_anim"
+			app:popEnterAnim="@anim/nav_pop_slide_enter_anim"
+			app:popExitAnim="@anim/nav_pop_slide_exit_anim" />
+	</fragment>
+
+	<fragment
+		android:id="@+id/RepositoryDetailFragment"
+		android:name="jp.co.yumemi.android.codecheck.view.RepositoryDetailFragment"
+		android:label="@string/repository_detail"
+		tools:layout="@layout/fragment_repository_detail">
+		<argument
+			android:name="repositoryItem"
+			app:argType="jp.co.yumemi.android.codecheck.model.RepositoryItem" />
 		<argument
 			android:name="lastSearchDate"
 			app:argType="string" />
-    </fragment>
+	</fragment>
 </navigation>

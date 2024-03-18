@@ -1,10 +1,18 @@
 <resources>
-    <string name="app_name">Android Engineer CodeCheck</string>
-    <string name="searchInputText_hint">GitHub のリポジトリを検索できるよー</string>
-    <string name="written_in">Written in</string>
+	<string name="app_name">Android Engineer CodeCheck</string>
+	<string name="searchInputText_hint">GitHub のリポジトリを検索</string>
+	<string name="written_in">Written in</string>
 	<string name="stars">stars</string>
 	<string name="watchers">watchers</string>
 	<string name="forks">forks</string>
 	<string name="open_issues">open issues</string>
+	<string name="empty_result_message">リポジトリがありません。</string>
+	<string name="home">ホーム</string>
+	<string name="keyword_empty_error_message">検索ワードを入力してください</string>
+	<string name="network_error_message">ネットワークエラーが発生しました</string>
+	<string name="retry">リトライ</string>
+	<string name="repository">リポジトリ</string>
 	<string name="github_url">https://api.github.com/</string>
+    <string name="repository_detail">リポジトリー詳細</string>
+	<string name="unknown_language">不明な言語</string>
 </resources>
