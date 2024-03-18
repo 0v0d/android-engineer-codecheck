@@ -249,7 +249,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="5dp"
-			android:text="@{repositoryItem.language}"
+			android:text="@{repositoryItem.language != null ? repositoryItem.language : @string/unknown_language}"
 			android:textSize="18sp"
 			app:layout_constraintBottom_toBottomOf="@+id/languageImageView"
 			app:layout_constraintStart_toEndOf="@+id/languageImageView"

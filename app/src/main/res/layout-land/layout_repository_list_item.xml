@@ -97,7 +97,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="40dp"
-			android:text="@{repositoryItem.language}"
+			android:text="@{repositoryItem.language != null ? repositoryItem.language : @string/unknown_language}"
 			android:textColor="@color/grey"
 			android:textSize="16sp"
 			app:layout_constraintBottom_toBottomOf="@+id/starCountTextView"
