@@ -14,4 +14,5 @@
 	<string name="repository">リポジトリ</string>
 	<string name="github_url">https://api.github.com/</string>
     <string name="repository_detail">リポジトリー詳細</string>
+	<string name="unknown_language">不明な言語</string>
 </resources>
