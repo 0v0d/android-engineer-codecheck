@@ -8,6 +8,10 @@
 		<variable
 			name="repositoryItem"
 			type="jp.co.yumemi.android.codecheck.model.RepositoryItem" />
+
+		<variable
+			name="viewModel"
+			type="jp.co.yumemi.android.codecheck.viewmodel.RepositoryDetailViewModel" />
 	</data>
 
 	<androidx.constraintlayout.widget.ConstraintLayout
@@ -27,18 +31,19 @@
 			tools:ignore="ImageContrastCheck"
 			tools:srcCompat="@tools:sample/avatars" />
 
-		<TextView
-			android:id="@+id/ownerNameTextView"
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/ownerNameButton"
+			style="@style/Widget.MaterialComponents.Button.TextButton"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="10dp"
+			android:layout_marginStart="8dp"
 			android:layout_marginTop="5dp"
-			android:layout_marginEnd="10dp"
+			android:gravity="start"
+			android:onClickListener="@{() -> viewModel.openUrl(repositoryItem.owner.htmlUrl)}"
 			android:text='@{repositoryItem.owner.login}'
 			android:textAllCaps="false"
 			android:textColor="@color/grey"
 			android:textSize="18sp"
-			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toEndOf="@+id/ownerIconImageView"
 			app:layout_constraintTop_toTopOf="@+id/ownerIconImageView"
 			tools:text="JetBrains" />
@@ -48,10 +53,11 @@
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="10dp"
+			android:layout_marginEnd="10dp"
 			android:text='@{repositoryItem.name}'
 			android:textSize="25sp"
 			android:textStyle="bold"
-			app:layout_constraintEnd_toEndOf="@+id/ownerNameTextView"
+			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="@+id/ownerIconImageView"
 			app:layout_constraintTop_toBottomOf="@+id/ownerIconImageView"
 			tools:text="kotlin" />
@@ -62,7 +68,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="20dp"
 			android:text='@{repositoryItem.description}'
-			app:layout_constraintEnd_toEndOf="@+id/ownerNameTextView"
+			app:layout_constraintEnd_toEndOf="@+id/repositoryNameTextView"
 			app:layout_constraintStart_toStartOf="@+id/repositoryNameTextView"
 			app:layout_constraintTop_toBottomOf="@+id/repositoryNameTextView"
 			tools:text="The Kotlin Programming Language." />
@@ -77,18 +83,23 @@
 			app:layout_constraintStart_toStartOf="@+id/repositoryDescriptionTextView"
 			app:layout_constraintTop_toBottomOf="@+id/repositoryDescriptionTextView" />
 
-		<TextView
-			android:id="@+id/linkTextView"
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/linkButton"
+			style="@style/Widget.MaterialComponents.Button.TextButton"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="5dp"
 			android:autoLink="web"
+			android:gravity="center_vertical"
+			android:onClickListener="@{() -> viewModel.openUrl(repositoryItem.htmlUrl)}"
 			android:text="@{repositoryItem.htmlUrl}"
 			android:textAllCaps="false"
 			android:textColorLink="@color/blue"
-			android:textSize="15sp"
+			android:textSize="13sp"
 			android:textStyle="bold"
-			app:layout_constraintEnd_toEndOf="@+id/ownerNameTextView"
+
+			app:layout_constraintBottom_toBottomOf="@+id/repositoryLinkImageView"
+
 			app:layout_constraintStart_toEndOf="@+id/repositoryLinkImageView"
 			app:layout_constraintTop_toTopOf="@+id/repositoryLinkImageView"
 			tools:text="https://github.com/JetBrains" />
@@ -97,11 +108,11 @@
 			android:id="@+id/starCountImageView"
 			android:layout_width="24dp"
 			android:layout_height="24dp"
-			android:layout_marginTop="15dp"
+			android:layout_marginTop="10dp"
 			android:contentDescription="@null"
 			android:src="@drawable/ic_star"
 			app:layout_constraintStart_toStartOf="@+id/repositoryLinkImageView"
-			app:layout_constraintTop_toBottomOf="@+id/repositoryLinkImageView" />
+			app:layout_constraintTop_toBottomOf="@+id/linkButton" />
 
 		<TextView
 			android:id="@+id/starCountTextView"
