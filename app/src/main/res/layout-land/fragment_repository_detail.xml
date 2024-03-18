@@ -1,259 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-	<data>
+    <data>
 
-		<variable
-			name="repositoryItem"
-			type="jp.co.yumemi.android.codecheck.model.RepositoryItem" />
-	</data>
+        <variable
+            name="repositoryItem"
+            type="jp.co.yumemi.android.codecheck.model.RepositoryItem" />
+    </data>
 
-	<androidx.constraintlayout.widget.ConstraintLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-		<com.google.android.material.imageview.ShapeableImageView
-			android:id="@+id/ownerIconImageView"
-			android:layout_width="70dp"
-			android:layout_height="70dp"
-			android:layout_marginStart="20dp"
-			android:layout_marginTop="20dp"
-			app:imageUrl="@{repositoryItem.owner.avatarUrl}"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			app:shapeAppearanceOverlay="@style/roundedCornersImageView"
-			tools:ignore="ImageContrastCheck"
-			tools:srcCompat="@tools:sample/avatars" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ownerIconImageView"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            app:imageUrl="@{repositoryItem.owner.avatarUrl}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/roundedCornersImageView"
+            tools:ignore="ImageContrastCheck"
+            tools:srcCompat="@tools:sample/avatars" />
 
-		<TextView
-			android:id="@+id/ownerNameTextView"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="10dp"
-			android:layout_marginTop="5dp"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ownerNameButton"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:onClickListener="@{() -> viewModel.openUrl(repositoryItem.owner.htmlUrl)}"
+            android:text='@{repositoryItem.owner.login}'
+            android:textAllCaps="false"
+            android:textColor="@color/grey"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/ownerIconImageView"
+            app:layout_constraintTop_toTopOf="@+id/ownerIconImageView"
+            tools:text="JetBrains" />
 
-			android:text='@{repositoryItem.owner.login}'
-			android:textAllCaps="false"
-			android:textColor="@color/grey"
-			android:textSize="18sp"
+        <TextView
+            android:id="@+id/repositoryNameTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text='@{repositoryItem.name}'
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/ownerNameButton"
+            app:layout_constraintStart_toStartOf="@+id/ownerIconImageView"
+            app:layout_constraintTop_toBottomOf="@+id/ownerIconImageView"
+            tools:text="kotlin" />
 
-			app:layout_constraintStart_toEndOf="@+id/ownerIconImageView"
-			app:layout_constraintTop_toTopOf="@+id/ownerIconImageView"
-			tools:text="JetBrains" />
+        <TextView
+            android:id="@+id/repositoryDescriptionTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:text='@{repositoryItem.description}'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/repositoryNameTextView"
+            app:layout_constraintTop_toBottomOf="@+id/repositoryNameTextView"
+            tools:text="The Kotlin Programming Language." />
 
-		<TextView
-			android:id="@+id/repositoryNameTextView"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="10dp"
-			android:text='@{repositoryItem.name}'
-			android:textSize="25sp"
-			android:textStyle="bold"
-			app:layout_constraintEnd_toEndOf="@+id/ownerNameTextView"
-			app:layout_constraintStart_toStartOf="@+id/ownerIconImageView"
-			app:layout_constraintTop_toBottomOf="@+id/ownerIconImageView"
-			tools:text="kotlin" />
+        <ImageView
+            android:id="@+id/repositoryLinkImageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_link"
+            app:layout_constraintStart_toStartOf="@+id/repositoryDescriptionTextView"
+            app:layout_constraintTop_toBottomOf="@+id/repositoryDescriptionTextView" />
 
-		<TextView
-			android:id="@+id/repositoryDescriptionTextView"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="20dp"
-			android:text='@{repositoryItem.description}'
-			android:layout_marginEnd="20dp"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="@+id/repositoryNameTextView"
-			app:layout_constraintTop_toBottomOf="@+id/repositoryNameTextView"
-			tools:text="The Kotlin Programming Language." />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/linkButton"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:autoLink="web"
+            android:gravity="center_vertical"
+            android:onClickListener="@{() -> viewModel.openUrl(repositoryItem.htmlUrl)}"
+            android:text="@{repositoryItem.htmlUrl}"
+            android:textAllCaps="false"
+            android:textColorLink="@color/blue"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/repositoryLinkImageView"
+            app:layout_constraintStart_toEndOf="@+id/repositoryLinkImageView"
+            app:layout_constraintTop_toTopOf="@+id/repositoryLinkImageView"
+            tools:text="https://github.com/JetBrains" />
 
-		<ImageView
-			android:id="@+id/repositoryLinkImageView"
-			android:layout_width="24dp"
-			android:layout_height="24dp"
-			android:layout_marginTop="20dp"
-			android:contentDescription="@null"
-			android:src="@drawable/ic_link"
-			app:layout_constraintStart_toStartOf="@+id/repositoryDescriptionTextView"
-			app:layout_constraintTop_toBottomOf="@+id/repositoryDescriptionTextView" />
+        <ImageView
+            android:id="@+id/starCountImageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="50dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_star"
+            app:layout_constraintStart_toEndOf="@+id/ownerNameButton"
+            app:layout_constraintTop_toTopOf="@+id/ownerNameButton" />
 
-		<TextView
-			android:id="@+id/linkTextView"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="5dp"
-			android:autoLink="web"
-			android:text="@{repositoryItem.htmlUrl}"
-			android:textAllCaps="false"
-			android:textColorLink="@color/blue"
-			android:textSize="15sp"
-			android:textStyle="bold"
-			app:layout_constraintBottom_toBottomOf="@+id/repositoryLinkImageView"
-			app:layout_constraintEnd_toEndOf="@+id/repositoryDescriptionTextView"
-			app:layout_constraintStart_toEndOf="@+id/repositoryLinkImageView"
-			app:layout_constraintTop_toTopOf="@+id/repositoryLinkImageView"
-			tools:text="https://github.com/JetBrains" />
+        <TextView
+            android:id="@+id/starCountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="@{repositoryItem.stargazersCount}"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/starCountImageView"
+            app:layout_constraintStart_toEndOf="@+id/starCountImageView"
+            app:layout_constraintTop_toTopOf="@+id/starCountImageView"
+            tools:text="47225" />
 
-		<ImageView
-			android:id="@+id/starCountImageView"
-			android:layout_width="24dp"
-			android:layout_height="24dp"
-			android:contentDescription="@null"
-			android:src="@drawable/ic_star"
-			android:layout_marginStart="50dp"
-			app:layout_constraintStart_toEndOf="@+id/ownerNameTextView"
-			app:layout_constraintTop_toTopOf="@+id/ownerNameTextView" />
+        <TextView
+            android:id="@+id/starTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="@string/stars"
+            android:textColor="@color/grey"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/starCountTextView"
+            app:layout_constraintStart_toEndOf="@+id/starCountTextView"
+            app:layout_constraintTop_toTopOf="@+id/starCountTextView" />
 
-		<TextView
-			android:id="@+id/starCountTextView"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="5dp"
-			android:text="@{repositoryItem.stargazersCount}"
-			android:textSize="18sp"
-			android:textStyle="bold"
-			app:layout_constraintBottom_toBottomOf="@+id/starCountImageView"
-			app:layout_constraintStart_toEndOf="@+id/starCountImageView"
-			app:layout_constraintTop_toTopOf="@+id/starCountImageView"
-			tools:text="47225" />
+        <ImageView
+            android:id="@+id/forkImageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="10dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_fork"
+            app:layout_constraintStart_toEndOf="@+id/watchTextView"
+            app:layout_constraintTop_toTopOf="@+id/starTextView" />
 
-		<TextView
-			android:id="@+id/starTextView"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="5dp"
-			android:text="@string/stars"
-			android:textColor="@color/grey"
-			android:textSize="18sp"
-			app:layout_constraintBottom_toBottomOf="@+id/starCountTextView"
-			app:layout_constraintStart_toEndOf="@+id/starCountTextView"
-			app:layout_constraintTop_toTopOf="@+id/starCountTextView" />
+        <TextView
+            android:id="@+id/forkCountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="@{repositoryItem.forksCount}"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/forkImageView"
+            app:layout_constraintStart_toEndOf="@+id/forkImageView"
+            app:layout_constraintTop_toTopOf="@+id/forkImageView"
+            tools:text="5575" />
 
-		<ImageView
-			android:id="@+id/forkImageView"
-			android:layout_width="24dp"
-			android:layout_height="24dp"
-			android:layout_marginStart="10dp"
-			android:contentDescription="@null"
-			android:src="@drawable/ic_fork"
-			app:layout_constraintStart_toEndOf="@+id/watchTextView"
-			app:layout_constraintTop_toTopOf="@+id/starTextView" />
+        <TextView
+            android:id="@+id/forkTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="@string/forks"
+            android:textColor="@color/grey"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/forkCountTextView"
+            app:layout_constraintStart_toEndOf="@+id/forkCountTextView"
+            app:layout_constraintTop_toTopOf="@+id/forkCountTextView" />
 
-		<TextView
-			android:id="@+id/forkCountTextView"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="5dp"
-			android:text="@{repositoryItem.forksCount}"
-			android:textSize="18sp"
-			android:textStyle="bold"
-			app:layout_constraintBottom_toBottomOf="@+id/forkImageView"
-			app:layout_constraintStart_toEndOf="@+id/forkImageView"
-			app:layout_constraintTop_toTopOf="@+id/forkImageView"
-			tools:text="5575" />
+        <ImageView
+            android:id="@+id/watchImageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="15dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_watch"
+            app:layout_constraintStart_toStartOf="@+id/starCountImageView"
+            app:layout_constraintTop_toBottomOf="@+id/starCountImageView" />
 
-		<TextView
-			android:id="@+id/forkTextView"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="5dp"
-			android:text="@string/forks"
-			android:textColor="@color/grey"
-			android:textSize="18sp"
-			app:layout_constraintBottom_toBottomOf="@+id/forkCountTextView"
-			app:layout_constraintStart_toEndOf="@+id/forkCountTextView"
-			app:layout_constraintTop_toTopOf="@+id/forkCountTextView" />
+        <TextView
+            android:id="@+id/watchCountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="@{repositoryItem.forksCount}"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/watchImageView"
+            app:layout_constraintStart_toEndOf="@+id/watchImageView"
+            app:layout_constraintTop_toTopOf="@+id/watchImageView"
+            tools:text="1490" />
 
-		<ImageView
-			android:id="@+id/watchImageView"
-			android:layout_width="24dp"
-			android:layout_height="24dp"
-			android:layout_marginTop="15dp"
-			android:contentDescription="@null"
-			android:src="@drawable/ic_watch"
-			app:layout_constraintStart_toStartOf="@+id/starCountImageView"
-			app:layout_constraintTop_toBottomOf="@+id/starCountImageView" />
+        <TextView
+            android:id="@+id/watchTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="@string/watchers"
+            android:textColor="@color/grey"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/watchCountTextView"
+            app:layout_constraintStart_toEndOf="@+id/watchCountTextView"
+            app:layout_constraintTop_toTopOf="@+id/watchCountTextView" />
 
-		<TextView
-			android:id="@+id/watchCountTextView"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="5dp"
-			android:text="@{repositoryItem.forksCount}"
-			android:textSize="18sp"
-			android:textStyle="bold"
-			app:layout_constraintBottom_toBottomOf="@+id/watchImageView"
-			app:layout_constraintStart_toEndOf="@+id/watchImageView"
-			app:layout_constraintTop_toTopOf="@+id/watchImageView"
-			tools:text="1490" />
+        <ImageView
+            android:id="@+id/openIssuesImageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_issue"
+            app:layout_constraintStart_toStartOf="@+id/forkImageView"
+            app:layout_constraintTop_toTopOf="@+id/watchTextView" />
 
-		<TextView
-			android:id="@+id/watchTextView"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="5dp"
-			android:text="@string/watchers"
-			android:textColor="@color/grey"
-			android:textSize="18sp"
-			app:layout_constraintBottom_toBottomOf="@+id/watchCountTextView"
-			app:layout_constraintStart_toEndOf="@+id/watchCountTextView"
-			app:layout_constraintTop_toTopOf="@+id/watchCountTextView" />
+        <TextView
+            android:id="@+id/openIssuesCountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="@{repositoryItem.openIssuesCount}"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/openIssuesImageView"
+            app:layout_constraintStart_toEndOf="@+id/openIssuesImageView"
+            app:layout_constraintTop_toTopOf="@+id/openIssuesImageView"
+            tools:text="171" />
 
-		<ImageView
-			android:id="@+id/openIssuesImageView"
-			android:layout_width="24dp"
-			android:layout_height="24dp"
-			android:contentDescription="@null"
-			android:src="@drawable/ic_issue"
-			app:layout_constraintStart_toStartOf="@+id/forkImageView"
-			app:layout_constraintTop_toTopOf="@+id/watchTextView" />
+        <TextView
+            android:id="@+id/openIssuesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="@string/open_issues"
+            android:textColor="@color/grey"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/openIssuesCountTextView"
+            app:layout_constraintStart_toEndOf="@+id/openIssuesCountTextView"
+            app:layout_constraintTop_toTopOf="@+id/openIssuesCountTextView" />
 
-		<TextView
-			android:id="@+id/openIssuesCountTextView"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="5dp"
-			android:text="@{repositoryItem.openIssuesCount}"
-			android:textSize="18sp"
-			android:textStyle="bold"
-			app:layout_constraintBottom_toBottomOf="@+id/openIssuesImageView"
-			app:layout_constraintStart_toEndOf="@+id/openIssuesImageView"
-			app:layout_constraintTop_toTopOf="@+id/openIssuesImageView"
-			tools:text="171" />
+        <ImageView
+            android:id="@+id/languageImageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="15dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_language"
+            app:layout_constraintStart_toStartOf="@+id/watchImageView"
+            app:layout_constraintTop_toBottomOf="@+id/watchTextView" />
 
-		<TextView
-			android:id="@+id/openIssuesTextView"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="5dp"
-			android:text="@string/open_issues"
-			android:textColor="@color/grey"
-			android:textSize="18sp"
-			app:layout_constraintBottom_toBottomOf="@+id/openIssuesCountTextView"
-			app:layout_constraintStart_toEndOf="@+id/openIssuesCountTextView"
-			app:layout_constraintTop_toTopOf="@+id/openIssuesCountTextView" />
-
-		<ImageView
-			android:id="@+id/languageImageView"
-			android:layout_width="24dp"
-			android:layout_height="24dp"
-			android:layout_marginTop="15dp"
-			android:contentDescription="@null"
-			android:src="@drawable/ic_language"
-			app:layout_constraintStart_toStartOf="@+id/watchImageView"
-			app:layout_constraintTop_toBottomOf="@+id/watchTextView" />
-
-		<TextView
-			android:id="@+id/languageTextView"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="5dp"
-			android:text="@{repositoryItem.language != null ? repositoryItem.language : @string/unknown_language}"
-			android:textSize="18sp"
-			app:layout_constraintBottom_toBottomOf="@+id/languageImageView"
-			app:layout_constraintStart_toEndOf="@+id/languageImageView"
-			app:layout_constraintTop_toTopOf="@+id/languageImageView"
-			tools:text="Kotlin" />
-	</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/languageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="@{repositoryItem.language != null ? repositoryItem.language : @string/unknown_language}"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/languageImageView"
+            app:layout_constraintStart_toEndOf="@+id/languageImageView"
+            app:layout_constraintTop_toTopOf="@+id/languageImageView"
+            tools:text="Kotlin" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
