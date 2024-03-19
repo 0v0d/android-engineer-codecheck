@@ -54,7 +54,7 @@ class RepositoryListViewModel @Inject constructor(
                 inputKeyWord = inputText
                 performSearch(inputKeyWord)
             } catch (e: Exception) {
-                handleSearchError(e.toString())
+                _searchState.postValue(SearchState.EMPTY_RESULT)
             }
         }
     }
@@ -77,7 +77,6 @@ class RepositoryListViewModel @Inject constructor(
     private fun handleResponse(response: Response<GitHubResponse>?) {
         if (response?.body() == null) {
             _searchState.postValue(SearchState.NETWORK_ERROR)
-            handleSearchError("response is null")
             return
         }
 
@@ -90,7 +89,6 @@ class RepositoryListViewModel @Inject constructor(
             Log.d("RepositoryListViewModel", "response is successful")
         } else {
             _searchState.postValue(SearchState.EMPTY_RESULT)
-            handleSearchError("response is empty")
         }
     }
 
@@ -101,13 +99,5 @@ class RepositoryListViewModel @Inject constructor(
         }
         _searchState.value = SearchState.LOADING
         searchRepositories(inputKeyWord)
-    }
-
-    /**
-     * エラーを表示する
-     * @param exception エラーメッセージ
-     */
-    private fun handleSearchError(exception: String) {
-        Log.e("RepositoryListViewModel", exception)
     }
 }
