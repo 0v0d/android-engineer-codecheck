@@ -16,7 +16,7 @@ import javax.inject.Singleton
 class GithubRepository @Inject constructor(
     private val service: GithubNetworkDataSource
 ) {
-    // キャッシュ
+    /** キャッシュ */
     private val cache = LruCache<String, Response<GitHubResponse>?>(5)
 
     /**
