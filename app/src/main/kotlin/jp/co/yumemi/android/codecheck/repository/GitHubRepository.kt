@@ -1,6 +1,5 @@
 package jp.co.yumemi.android.codecheck.repository
 
-import android.util.Log
 import android.util.LruCache
 import jp.co.yumemi.android.codecheck.source.GithubNetworkDataSource
 import jp.co.yumemi.android.codecheck.model.GitHubResponse
