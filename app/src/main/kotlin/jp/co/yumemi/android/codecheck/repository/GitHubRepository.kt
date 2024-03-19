@@ -5,7 +5,6 @@ import android.util.LruCache
 import jp.co.yumemi.android.codecheck.source.GithubNetworkDataSource
 import jp.co.yumemi.android.codecheck.model.GitHubResponse
 import retrofit2.Response
-
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -33,7 +32,6 @@ class GithubRepository @Inject constructor(
         // キャッシュになければ新たに検索
         return try {
             val response = service.getRepositoriesData(query).execute()
-            Log.d("RepositoryListViewModel", "searchRepositoriesData: $response")
             cache.put(query, response)
             response
         } catch (e: IOException) {
