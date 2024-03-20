@@ -12,12 +12,12 @@
 
 ### 環境
 
-- IDE：Android Studio Flamingo | 2022.2.1 Patch 2
-- Kotlin：1.6.21
-- Java：17
-- Gradle：8.0
-- minSdk：23
-- targetSdk：31
+- IDE：Android Studio Iguana 2023.2.1
+- Kotlin：1.9.22
+- Java：11
+- Gradle：8.6
+- minSdk：24
+- targetSdk：34
 
 ※ ライブラリの利用はオープンソースのものに限ります。
 ※ 環境は適宜更新してください。
@@ -25,8 +25,9 @@
 ### 動作
 
 1. 何かしらのキーワードを入力
-2. GitHub API（`search/repositories`）でリポジトリを検索し、結果一覧を概要（リポジトリ名）で表示
-3. 特定の結果を選択したら、該当リポジトリの詳細（リポジトリ名、オーナーアイコン、プロジェクト言語、Star 数、Watcher 数、Fork 数、Issue 数）を表示
+2. GitHub API（`search/repositories`）でリポジトリを検索すると、リポジトリーリスト画面へ遷移
+3. リポジトリーリストを概要（オーナーアイコン、オーナー名、リポジトリ名、リポジトリーの説明、Star 数、プロジェクト言語）で表示
+4. 特定の結果を選択したら、該当リポジトリの詳細（リポジトリ名、オーナーアイコン、プロジェクト言語、Star 数、Watcher 数、Fork 数、Issue 数、リポジトリーURL）を表示
 
 ## 課題取り組み方法
 
