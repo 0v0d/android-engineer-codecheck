@@ -18,7 +18,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "jp.co.yumemi.android.codecheck.CodeCheckTestRunner"
     }
 
     buildTypes {
@@ -50,6 +50,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     //Dagger-Hilt
     implementation "com.google.dagger:hilt-android:2.51"
+    implementation 'androidx.test:runner:1.5.2'
     kapt "com.google.dagger:hilt-compiler:2.51"
     // MoshiのConverterを使うためのライブラリ
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
@@ -58,12 +59,13 @@ dependencies {
     //LeakCanary メモリリーク検出ライブラリ
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.13'
 
-    testImplementation 'junit:junit:4.13.2'
+    //MockitoJUnitRunner
+    testImplementation 'org.mockito:mockito-core:5.2.0'
+    testImplementation 'androidx.arch.core:core-testing:2.2.0'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation 'androidx.fragment:fragment-testing:1.6.2'
-    androidTestImplementation 'androidx.test:core-ktx:1.5.0'
-    androidTestImplementation 'androidx.test:rules:1.5.0'
+    testImplementation "com.google.dagger:hilt-android-testing:2.51"
+    kaptTest "com.google.dagger:hilt-android-compiler:2.51"
 }
 kapt {
     correctErrorTypes true
