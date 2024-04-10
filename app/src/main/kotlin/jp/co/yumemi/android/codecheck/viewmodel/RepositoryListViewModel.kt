@@ -6,8 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jp.co.yumemi.android.codecheck.model.GitHubResponse
-import jp.co.yumemi.android.codecheck.model.RepositoryItem
+import jp.co.yumemi.android.codecheck.model.response.APIGitHubResponse
+import jp.co.yumemi.android.codecheck.model.domain.RepositoryItem
+import jp.co.yumemi.android.codecheck.model.response.toDomainModel
 import jp.co.yumemi.android.codecheck.repository.GithubRepository
 import jp.co.yumemi.android.codecheck.state.SearchState
 import kotlinx.coroutines.Dispatchers
@@ -74,18 +75,19 @@ class RepositoryListViewModel @Inject constructor(
      * APIから検索結果を取得する
      * @param response 検索結果
      */
-    private fun handleResponse(response: Response<GitHubResponse>?) {
+    private fun handleResponse(response: Response<APIGitHubResponse>?) {
         if (response?.body() == null) {
             _searchState.postValue(SearchState.NETWORK_ERROR)
             return
         }
-
-        val isResultEmpty = response.body()?.items?.isEmpty() ?: true
+        val repositories = response.body()?.items?.map { it.toDomainModel() }
+        val isResultEmpty = repositories.isNullOrEmpty()
 
         if (response.isSuccessful && !isResultEmpty) {
             _searchState.postValue(SearchState.SUCCESS)
             _lastSearchDate.postValue(Date())
-            _repositoryItems.postValue(response.body()?.items)
+
+            repositories?.let { _repositoryItems.postValue(it) }
             Log.d("RepositoryListViewModel", "response is successful")
         } else {
             _searchState.postValue(SearchState.EMPTY_RESULT)

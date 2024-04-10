@@ -43,7 +43,7 @@
 		tools:layout="@layout/fragment_repository_detail">
 		<argument
 			android:name="repositoryItem"
-			app:argType="jp.co.yumemi.android.codecheck.model.RepositoryItem" />
+			app:argType="jp.co.yumemi.android.codecheck.model.domain.RepositoryItem" />
 		<argument
 			android:name="lastSearchDate"
 			app:argType="string" />

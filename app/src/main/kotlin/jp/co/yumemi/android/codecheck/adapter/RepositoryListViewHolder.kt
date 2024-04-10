@@ -2,7 +2,7 @@ package jp.co.yumemi.android.codecheck.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.yumemi.android.codecheck.databinding.LayoutRepositoryListItemBinding
-import jp.co.yumemi.android.codecheck.model.RepositoryItem
+import jp.co.yumemi.android.codecheck.model.domain.RepositoryItem
 
 /**
  * リポジトリリストビューホルダー

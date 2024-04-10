@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.codecheck.R
 import jp.co.yumemi.android.codecheck.adapter.RepositoryListAdapter
 import jp.co.yumemi.android.codecheck.databinding.FragmentRepositoryListBinding
-import jp.co.yumemi.android.codecheck.model.RepositoryItem
+import jp.co.yumemi.android.codecheck.model.domain.RepositoryItem
 import jp.co.yumemi.android.codecheck.state.SearchState
 import jp.co.yumemi.android.codecheck.viewmodel.RepositoryListViewModel
 import java.util.Date

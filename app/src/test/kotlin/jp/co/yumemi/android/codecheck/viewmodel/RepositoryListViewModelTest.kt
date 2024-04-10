@@ -2,9 +2,11 @@ package jp.co.yumemi.android.codecheck.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import jp.co.yumemi.android.codecheck.model.GitHubResponse
-import jp.co.yumemi.android.codecheck.model.OwnerItem
-import jp.co.yumemi.android.codecheck.model.RepositoryItem
+import jp.co.yumemi.android.codecheck.model.response.APIGitHubResponse
+import jp.co.yumemi.android.codecheck.model.domain.OwnerItem
+import jp.co.yumemi.android.codecheck.model.domain.RepositoryItem
+import jp.co.yumemi.android.codecheck.model.response.APIOwnerItem
+import jp.co.yumemi.android.codecheck.model.response.APIRepositoryItem
 import jp.co.yumemi.android.codecheck.repository.GithubRepository
 import jp.co.yumemi.android.codecheck.state.SearchState
 import kotlinx.coroutines.Dispatchers
@@ -42,13 +44,13 @@ class RepositoryListViewModelTest {
     @Mock
     private lateinit var repositoryItemsObserver: Observer<List<RepositoryItem>>
 
-    private val response = GitHubResponse(
+    private val response = APIGitHubResponse(
         listOf(
-            RepositoryItem(
+            APIRepositoryItem(
                 3432266,
                 "kotlin",
                 "JetBrains/kotlin",
-                OwnerItem(
+                APIOwnerItem(
                     "JetBrains",
                     "https://avatars.githubusercontent.com/u/878437?v=4",
                     "https://github.com/JetBrains",
@@ -64,7 +66,7 @@ class RepositoryListViewModelTest {
         )
     )
 
-    private val emptyResponse = GitHubResponse(
+    private val emptyResponse = APIGitHubResponse(
         emptyList()
     )
 
@@ -112,7 +114,7 @@ class RepositoryListViewModelTest {
     fun searchRepositoriesNetWorkErrorResponse() =
         runTest {
             val keyword = "kotlin"
-            val response = Response.error<GitHubResponse>(500, ResponseBody.create(null, ""))
+            val response = Response.error<APIGitHubResponse>(500, ResponseBody.create(null, ""))
             `when`(repository.searchRepositoriesData(keyword)).thenReturn(response)
 
             viewModel.searchState.observeForever {

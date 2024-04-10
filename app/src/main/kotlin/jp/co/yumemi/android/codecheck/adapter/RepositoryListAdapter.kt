@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import jp.co.yumemi.android.codecheck.databinding.LayoutRepositoryListItemBinding
-import jp.co.yumemi.android.codecheck.model.RepositoryItem
+import jp.co.yumemi.android.codecheck.model.domain.RepositoryItem
 
 /**
  * リポジトリーリストアダプター

@@ -1,7 +1,6 @@
 package jp.co.yumemi.android.codecheck.source
 
-import jp.co.yumemi.android.codecheck.model.GitHubResponse
-import retrofit2.Call
+import jp.co.yumemi.android.codecheck.model.response.APIGitHubResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -13,5 +12,5 @@ interface GithubNetworkDataSource {
      * @return Call<GitHubResponse>リポジトリ情報
      */
     @GET("search/repositories")
-    suspend fun getRepositoriesData(@Query("q") query: String): Response<GitHubResponse>
+    suspend fun getRepositoriesData(@Query("q") query: String): Response<APIGitHubResponse>
 }
