@@ -53,6 +53,8 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:2.51"
     // MoshiのConverterを使うためのライブラリ
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     // Jsonパーサーライブラリ
     implementation 'com.squareup.moshi:moshi-kotlin:1.15.1'
     //LeakCanary メモリリーク検出ライブラリ
