@@ -60,8 +60,8 @@
             android:id="@+id/repositoryDescriptionTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="250dp"
             android:text='@{repositoryItem.description}'
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/repositoryNameTextView"
@@ -78,24 +78,25 @@
             app:layout_constraintStart_toStartOf="@+id/repositoryDescriptionTextView"
             app:layout_constraintTop_toBottomOf="@+id/repositoryDescriptionTextView" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/linkButton"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:autoLink="web"
-            android:gravity="center_vertical"
-            android:onClickListener="@{() -> viewModel.openUrl(repositoryItem.htmlUrl)}"
-            android:text="@{repositoryItem.htmlUrl}"
-            android:textAllCaps="false"
-            android:textColorLink="@color/blue"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/repositoryLinkImageView"
-            app:layout_constraintStart_toEndOf="@+id/repositoryLinkImageView"
-            app:layout_constraintTop_toTopOf="@+id/repositoryLinkImageView"
-            tools:text="https://github.com/JetBrains" />
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/linkButton"
+			style="@style/Widget.MaterialComponents.Button.TextButton"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="5dp"
+			android:autoLink="web"
+			android:gravity="center_vertical"
+			android:onClickListener="@{() -> viewModel.openUrl(repositoryItem.htmlUrl)}"
+			android:text="@{repositoryItem.htmlUrl}"
+			android:textAllCaps="false"
+			android:textColorLink="@color/blue"
+			android:textSize="15sp"
+			android:textStyle="bold"
+			app:layout_constraintBottom_toBottomOf="@+id/repositoryLinkImageView"
+			app:layout_constraintEnd_toEndOf="@+id/repositoryDescriptionTextView"
+			app:layout_constraintStart_toEndOf="@+id/repositoryLinkImageView"
+			app:layout_constraintTop_toTopOf="@+id/repositoryLinkImageView"
+			tools:text="https://github.com/JetBrains" />
 
         <ImageView
             android:id="@+id/starCountImageView"
