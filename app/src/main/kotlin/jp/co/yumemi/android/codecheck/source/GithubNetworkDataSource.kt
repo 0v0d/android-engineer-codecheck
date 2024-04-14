@@ -1,6 +1,6 @@
 package jp.co.yumemi.android.codecheck.source
 
-import jp.co.yumemi.android.codecheck.model.response.APIGitHubResponse
+import jp.co.yumemi.android.codecheck.model.api.APIGitHubResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
