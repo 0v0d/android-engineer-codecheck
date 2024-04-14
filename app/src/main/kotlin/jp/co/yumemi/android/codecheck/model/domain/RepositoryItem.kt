@@ -1,6 +1,8 @@
 package jp.co.yumemi.android.codecheck.model.domain
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 
 /**
  * リポジトリのドメインモデル
@@ -16,6 +18,7 @@ import java.io.Serializable
  * @param forksCount フォークの数
  * @param openIssuesCount オープンなIssueの数
  */
+@Parcelize
 data class RepositoryItem(
     val id: Long,
     val name: String,
@@ -28,4 +31,4 @@ data class RepositoryItem(
     val watchersCount: String,
     val forksCount: String,
     val openIssuesCount: String
-) : Serializable
+) : Parcelable
