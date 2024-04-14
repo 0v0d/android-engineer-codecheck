@@ -11,10 +11,14 @@ import android.view.View
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import jp.co.yumemi.android.codecheck.R
 import jp.co.yumemi.android.codecheck.databinding.FragmentRepositoryDetailBinding
 import jp.co.yumemi.android.codecheck.viewmodel.RepositoryDetailViewModel
+import kotlinx.coroutines.launch
 
 /** リポジトリ詳細画面 */
 class RepositoryDetailFragment : Fragment(R.layout.fragment_repository_detail) {
@@ -39,9 +43,13 @@ class RepositoryDetailFragment : Fragment(R.layout.fragment_repository_detail) {
 
     /** urlの変更を監視 */
     private fun observeUrl() {
-        viewModel.url.observe(viewLifecycleOwner) {
-            if (it != null) {
-                openWebBrowser(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.url.collect {
+                    if (it != null) {
+                        openWebBrowser(it)
+                    }
+                }
             }
         }
     }
@@ -59,5 +67,6 @@ class RepositoryDetailFragment : Fragment(R.layout.fragment_repository_detail) {
             )
         )
         startActivity(intent)
+        viewModel.clearUrl()
     }
 }

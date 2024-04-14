@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.codecheck.model
+package jp.co.yumemi.android.codecheck.model.api
 
 import android.os.Parcelable
 import com.squareup.moshi.Json
@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
  * @param items リポジトリ情報
  */
 @Parcelize
-data class GitHubResponse(
+data class APIGitHubResponse(
     @Json(name = "items")
-    val items: List<RepositoryItem>
+    val items: List<APIRepositoryItem>
 ) : Parcelable

@@ -1,7 +1,8 @@
-package jp.co.yumemi.android.codecheck.model
+package jp.co.yumemi.android.codecheck.model.api
 
 import android.os.Parcelable
 import com.squareup.moshi.Json
+import jp.co.yumemi.android.codecheck.model.domain.RepositoryItem
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -19,7 +20,7 @@ import kotlinx.parcelize.Parcelize
  * @param openIssuesCount オープンイシュー数
  */
 @Parcelize
-data class RepositoryItem(
+data class APIRepositoryItem(
     @Json(name = "id")
     val id: Long,
     @Json(name = "name")
@@ -27,7 +28,7 @@ data class RepositoryItem(
     @Json(name = "full_name")
     val fullName: String,
     @Json(name = "owner")
-    val owner: OwnerItem,
+    val owner: APIOwnerItem,
     @Json(name = "html_url")
     val htmlUrl: String,
     @Json(name = "description")
@@ -43,3 +44,19 @@ data class RepositoryItem(
     @Json(name = "open_issues_count")
     val openIssuesCount: String
 ) : Parcelable
+
+
+/** APIRepositoryItemをドメインモデルに変換する */
+fun APIRepositoryItem.toDomainModel() = RepositoryItem(
+    id = id,
+    name = name,
+    fullName = fullName,
+    owner = owner.toDomainModel(),
+    htmlUrl = htmlUrl,
+    description = description,
+    language = language,
+    stargazersCount = stargazersCount,
+    watchersCount = watchersCount,
+    forksCount = forksCount,
+    openIssuesCount = openIssuesCount
+)

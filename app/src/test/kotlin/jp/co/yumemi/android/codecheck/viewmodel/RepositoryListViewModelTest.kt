@@ -1,12 +1,15 @@
 package jp.co.yumemi.android.codecheck.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
-import jp.co.yumemi.android.codecheck.model.GitHubResponse
-import jp.co.yumemi.android.codecheck.model.OwnerItem
-import jp.co.yumemi.android.codecheck.model.RepositoryItem
+import jp.co.yumemi.android.codecheck.model.api.APIGitHubResponse
+import jp.co.yumemi.android.codecheck.model.api.APIOwnerItem
+import jp.co.yumemi.android.codecheck.model.api.APIRepositoryItem
+import jp.co.yumemi.android.codecheck.model.api.toDomainModel
+import jp.co.yumemi.android.codecheck.model.domain.OwnerItem
+import jp.co.yumemi.android.codecheck.model.domain.RepositoryItem
 import jp.co.yumemi.android.codecheck.repository.GithubRepository
 import jp.co.yumemi.android.codecheck.state.SearchState
+import jp.co.yumemi.android.codecheck.usecase.SearchRepositoriesUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -21,6 +24,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
@@ -34,21 +38,15 @@ class RepositoryListViewModelTest {
     private lateinit var viewModel: RepositoryListViewModel
 
     @Mock
-    private lateinit var repository: GithubRepository
+    private lateinit var useCase: SearchRepositoriesUseCase
 
-    @Mock
-    private lateinit var searchStateObserver: Observer<SearchState>
-
-    @Mock
-    private lateinit var repositoryItemsObserver: Observer<List<RepositoryItem>>
-
-    private val response = GitHubResponse(
+    private val response = APIGitHubResponse(
         listOf(
-            RepositoryItem(
+            APIRepositoryItem(
                 3432266,
                 "kotlin",
                 "JetBrains/kotlin",
-                OwnerItem(
+                APIOwnerItem(
                     "JetBrains",
                     "https://avatars.githubusercontent.com/u/878437?v=4",
                     "https://github.com/JetBrains",
@@ -64,7 +62,8 @@ class RepositoryListViewModelTest {
         )
     )
 
-    private val emptyResponse = GitHubResponse(
+
+    private val emptyResponse = APIGitHubResponse(
         emptyList()
     )
 
@@ -72,9 +71,7 @@ class RepositoryListViewModelTest {
     @Before
     fun setup() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
-        viewModel = RepositoryListViewModel(repository)
-        viewModel.searchState.observeForever(searchStateObserver)
-        viewModel.repositoryItems.observeForever(repositoryItemsObserver)
+        viewModel = RepositoryListViewModel(useCase)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -82,69 +79,43 @@ class RepositoryListViewModelTest {
     fun cleanup() {
         Dispatchers.resetMain()
 
-        viewModel.repositoryItems.removeObserver(repositoryItemsObserver)
-        viewModel.searchState.removeObserver(searchStateObserver)
     }
 
     /** リポジトリ検索成功時のテスト */
     @Test
-    fun searchRepositoriesSuccessResponse() =
-        runTest {
-            val keyword = "kotlin"
-            `when`(repository.searchRepositoriesData(keyword)).thenReturn(Response.success(response))
+    fun searchRepositoriesSuccessResponse() = runTest {
+        val keyword = "kotlin"
+        `when`(useCase.execute(keyword)).thenReturn(Response.success(response))
 
-            viewModel.repositoryItems.observeForever {
-                if (it == response.items) {
-                    assertEquals(response.items, viewModel.repositoryItems.value)
-                }
-            }
+        viewModel.searchRepositories(keyword)
 
-            viewModel.searchState.observeForever {
-                if (it == SearchState.SUCCESS) {
-                    assertEquals(SearchState.SUCCESS, viewModel.searchState.value)
-                }
-            }
-            viewModel.searchRepositories(keyword)
-        }
+        verify(useCase).execute(keyword)
+        val responseItems = response.items.map { it.toDomainModel() }
+        assertEquals(responseItems, viewModel.repositoryItems.value)
+        assertEquals(SearchState.SUCCESS, viewModel.searchState.value)
+    }
 
     /** リポジトリ検索失敗時のテスト */
     @Test
     fun searchRepositoriesNetWorkErrorResponse() =
         runTest {
             val keyword = "kotlin"
-            val response = Response.error<GitHubResponse>(500, ResponseBody.create(null, ""))
-            `when`(repository.searchRepositoriesData(keyword)).thenReturn(response)
+            val response = Response.error<APIGitHubResponse>(500, ResponseBody.create(null, ""))
+            `when`(useCase.execute(keyword)).thenReturn(response)
 
-            viewModel.searchState.observeForever {
-                if (it == SearchState.NETWORK_ERROR) {
-                    assertEquals(SearchState.NETWORK_ERROR, viewModel.searchState.value)
-                }
-            }
+            assertEquals(SearchState.NETWORK_ERROR, viewModel.searchState.value)
             viewModel.searchRepositories(keyword)
         }
 
     /** リポジトリ検索結果が空の場合のテスト */
     @Test
-    fun searchRepositoriesEmptyResponse() =
-        runTest {
-            val keyword = "kotlin"
-            `when`(repository.searchRepositoriesData(keyword)).thenReturn(
-                Response.success(
-                    emptyResponse
-                )
-            )
+    fun searchRepositoriesEmptyResponse() = runTest {
+        val keyword = "kotlin"
+        `when`(useCase.execute(keyword)).thenReturn(Response.success(emptyResponse))
 
-            viewModel.repositoryItems.observeForever {
-                if (it == emptyResponse.items) {
-                    assertEquals(emptyResponse.items.isEmpty(), viewModel.repositoryItems.value)
-                }
-            }
+        viewModel.searchRepositories(keyword)
 
-            viewModel.searchState.observeForever {
-                if (it == SearchState.EMPTY_RESULT) {
-                    assertEquals(SearchState.EMPTY_RESULT, viewModel.searchState.value)
-                }
-            }
-            viewModel.searchRepositories(keyword)
-        }
+        assertEquals(emptyList<RepositoryItem>(), viewModel.repositoryItems.value)
+        assertEquals(SearchState.EMPTY_RESULT, viewModel.searchState.value)
+    }
 }

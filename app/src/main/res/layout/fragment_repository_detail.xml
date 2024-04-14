@@ -7,7 +7,7 @@
 
 		<variable
 			name="repositoryItem"
-			type="jp.co.yumemi.android.codecheck.model.RepositoryItem" />
+			type="jp.co.yumemi.android.codecheck.model.domain.RepositoryItem" />
 
 		<variable
 			name="viewModel"
@@ -53,7 +53,7 @@
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="10dp"
-			android:layout_marginEnd="10dp"
+			android:layout_marginEnd="70dp"
 			android:text='@{repositoryItem.name}'
 			android:textSize="25sp"
 			android:textStyle="bold"

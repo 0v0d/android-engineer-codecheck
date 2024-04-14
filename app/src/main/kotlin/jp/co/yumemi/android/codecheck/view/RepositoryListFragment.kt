@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,10 +17,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.codecheck.R
 import jp.co.yumemi.android.codecheck.adapter.RepositoryListAdapter
 import jp.co.yumemi.android.codecheck.databinding.FragmentRepositoryListBinding
-import jp.co.yumemi.android.codecheck.model.RepositoryItem
+import jp.co.yumemi.android.codecheck.model.domain.RepositoryItem
 import jp.co.yumemi.android.codecheck.state.SearchState
 import jp.co.yumemi.android.codecheck.viewmodel.RepositoryListViewModel
-import java.util.Date
+import kotlinx.coroutines.launch
 
 /** リポジトリーリスト画面 */
 @AndroidEntryPoint
@@ -61,15 +64,23 @@ class RepositoryListFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeErrorState()
-        observeResultList()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    observeErrorState()
+                }
+                launch {
+                    observeResultList()
+                }
+            }
+        }
         setUpResultListRecyclerView()
         viewModel.searchRepositories(args.inputText)
     }
 
     /** searchStateの変化を監視する */
-    private fun observeErrorState() {
-        viewModel.searchState.observe(viewLifecycleOwner) {
+    private suspend fun observeErrorState() {
+        viewModel.searchState.collect {
             switchErrorState(it)
         }
     }
@@ -114,8 +125,8 @@ class RepositoryListFragment : Fragment() {
     }
 
     /** 検索結果のリストを監視する */
-    private fun observeResultList() {
-        viewModel.repositoryItems.observe(viewLifecycleOwner) {
+    private suspend fun observeResultList() {
+        viewModel.repositoryItems.collect {
             if (it.isNotEmpty()) {
                 binding.loadingProgressBar.isVisible = false
                 adapter.submitList(it)
@@ -134,7 +145,7 @@ class RepositoryListFragment : Fragment() {
      * @param repositoryItem リポジトリーデータ
      */
     private fun navigateToRepositoryDetailFragment(repositoryItem: RepositoryItem) {
-        val date = viewModel.lastSearchDate.value ?: Date()
+        val date = viewModel.lastSearchDate.value
         val action =
             RepositoryListFragmentDirections.actionToRepositoryDetailFragment(
                 repositoryItem,
