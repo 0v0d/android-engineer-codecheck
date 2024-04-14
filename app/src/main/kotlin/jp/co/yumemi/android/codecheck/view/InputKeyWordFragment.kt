@@ -4,17 +4,20 @@
 package jp.co.yumemi.android.codecheck.view
 
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import jp.co.yumemi.android.codecheck.R
 import jp.co.yumemi.android.codecheck.databinding.FragmentInputKeyWordBinding
 import jp.co.yumemi.android.codecheck.viewmodel.InputKeyWordViewModel
+import kotlinx.coroutines.launch
 
 /** リポジトリー検索画面 */
 @AndroidEntryPoint
@@ -51,29 +54,30 @@ class InputKeyWordFragment : Fragment() {
      * 検索ボタンを押した時の処理
      */
     private fun setupSearchInputClick() {
-        binding.searchInputText.setOnKeyListener { _, keyCode, event ->
-            val isEnterKey =
-                keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN
-            if (isEnterKey) {
-                val inputText = binding.searchInputText.text.toString()
-                viewModel.validateKeyword(inputText)
-                return@setOnKeyListener true
+        binding.searchInputText.setOnEditorActionListener { editText, action, _ ->
+            if (action == EditorInfo.IME_ACTION_SEARCH) {
+                viewModel.setKeyword(editText.text.toString())
+                return@setOnEditorActionListener true
             }
-            false
+            return@setOnEditorActionListener false
         }
     }
 
     /** ViewModelを監視する */
     private fun observeViewModel() {
-        viewModel.keyword.observe(viewLifecycleOwner) { keyword ->
-            if (viewModel.isInputValid(keyword)) {
-                navigateToResultListFragment(keyword)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    observeKeywordFlow()
+                }
             }
         }
+    }
 
-        viewModel.showError.observe(viewLifecycleOwner) { isShowError ->
-            if (isShowError) {
-                showErrorText()
+    private suspend fun observeKeywordFlow() {
+        viewModel.keyword.collect { keyword ->
+            if (keyword.isNotBlank() && keyword.isNotEmpty()) {
+                navigateToResultListFragment(keyword)
             }
         }
     }
@@ -90,12 +94,6 @@ class InputKeyWordFragment : Fragment() {
     private fun clearKeywordInputText() {
         viewModel.onNavigateComplete()
         binding.searchInputText.text?.clear()
-    }
-
-    /** エラーテキストを表示する */
-    private fun showErrorText() {
-        val errorText = getString(R.string.keyword_empty_error_message)
-        binding.searchInputText.error = errorText
     }
 
     /** ビュー破棄時の処理 */
