@@ -1,6 +1,5 @@
 package jp.co.yumemi.android.codecheck.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -58,7 +57,6 @@ class RepositoryListViewModel @Inject constructor(
         viewModelScope.launch {
             _searchEvent.emit(inputText)
         }
-
     }
 
     /**
@@ -88,7 +86,6 @@ class RepositoryListViewModel @Inject constructor(
             _lastSearchDate.value = Date()
 
             _repositoryItems.value = repositories ?: emptyList()
-            Log.d("RepositoryListViewModel", "response is successful")
         } else {
             _searchState.value = SearchState.EMPTY_RESULT
         }
