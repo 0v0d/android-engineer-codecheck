@@ -1,43 +1,41 @@
 package jp.co.yumemi.android.codecheck.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnit
-import org.mockito.junit.MockitoRule
 
+@ExperimentalCoroutinesApi
 class RepositoryDetailViewModelTest {
     @get:Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
-
-    @get:Rule
-    var mockitoRule: MockitoRule = MockitoJUnit.rule()
-
-    @Mock
-    private lateinit var urlObserver: Observer<String?>
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var viewModel: RepositoryDetailViewModel
 
     @Before
-    fun setup() {
+    fun setUp() {
+        Dispatchers.setMain(UnconfinedTestDispatcher())
         viewModel = RepositoryDetailViewModel()
-        viewModel.url.observeForever(urlObserver)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     /** URLを開いたときにLiveDataにURLがセットされることを確認する */
     @Test
-    fun testOpenUrl() {
-        val htmlUrl = "https://example.com"
-        viewModel.openUrl(htmlUrl)
-        viewModel.url.observeForever {
-            if (it == htmlUrl) {
-                assertEquals(htmlUrl, viewModel.url.value)
-            }
-        }
-        assertEquals(null, viewModel.url.value)
+    fun testOpenUrl() = runTest {
+        val url = "https://example.com"
+        viewModel.openUrl(url)
+        assertEquals(url, viewModel.url.value)
     }
 }
