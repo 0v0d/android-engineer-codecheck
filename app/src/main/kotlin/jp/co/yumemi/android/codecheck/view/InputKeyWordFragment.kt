@@ -98,7 +98,7 @@ class InputKeyWordFragment : Fragment() {
 
     /** ビュー破棄時の処理 */
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 }

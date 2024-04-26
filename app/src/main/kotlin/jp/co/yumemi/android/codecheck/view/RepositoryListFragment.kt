@@ -156,8 +156,8 @@ class RepositoryListFragment : Fragment() {
 
     /** ビュー破棄時の処理 */
     override fun onDestroyView() {
-        super.onDestroyView()
         binding.repositoryRecyclerView.adapter = null
         _binding = null
+        super.onDestroyView()
     }
 }
